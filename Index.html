@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vuelos Cuba a Guyana | Reserva de Pasajes Directos</title>
+    <style>
+        :root {
+            --primary: #0052cc;
+            --secondary: #0747a6;
+            --accent: #ffab00;
+            --dark: #172b4d;
+            --light: #f4f5f7;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,82,204,0.85), rgba(7,71,166,0.85)), url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .search-card {
+            background: white;
+            max-width: 850px;
+            margin: -30px auto 2rem auto;
+            padding: 1.8rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 0.4rem;
+            color: #5e6c84;
+        }
+
+        .form-group input, .form-group select {
+            padding: 0.75rem;
+            border: 1px solid #dfe1e6;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .btn-search {
+            grid-column: 1 / -1;
+            background-color: var(--accent);
+            color: var(--dark);
+            font-weight: bold;
+            border: none;
+            padding: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .btn-search:hover {
+            background-color: #ff9900;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 2rem 0 1.5rem 0;
+            color: var(--primary);
+        }
+
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .card ul {
+            list-style-position: inside;
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .payment-info {
+            background: #e3fcef;
+            border: 1px solid #abf5d1;
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.5rem; }
+            .search-card { margin-top: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">✈️ Vuelos Cuba - Guyana</div>
+        <div>Pagos Seguros en USD</div>
+    </header>
+
+    <section class="hero">
+        <h1>Reserva de Vuelos Cuba a Guyana (Georgetown)</h1>
+        <p>Emisión de boletos y confirmación garantizada</p>
+    </section>
+
+    <main class="container">
+        <!-- Buscador de Vuelos -->
+        <div class="search-card">
+            <form id="flightForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="origin">Origen (Cuba)</label>
+                        <select id="origin" required>
+                            <option value="La Habana (HAV)">La Habana (HAV)</option>
+                            <option value="Camagüey (CMW)">Camagüey (CMW)</option>
+                            <option value="Holguín (HOG)">Holguín (HOG)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="destination">Destino (Guyana)</label>
+                        <select id="destination" required>
+                            <option value="Georgetown (GEO)">Georgetown - Cheddi Jagan (GEO)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="departureDate">Fecha de Salida</label>
+                        <input type="date" id="departureDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="passengers">Pasajeros</label>
+                        <input type="number" id="passengers" min="1" max="9" value="1" required>
+                    </div>
+
+                    <button type="submit" class="btn-search">Buscar Disponibilidad</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Información de Pagos -->
+        <div class="payment-info">
+            <h3>💳 Procesamiento de Pagos desde EE. UU.</h3>
+            <p>Aceptamos Visa, MasterCard, Discover, American Express, Zelle y Apple Pay.</p>
+        </div>
+
+        <!-- Requisitos para Viajar a Guyana -->
+        <h2 class="section-title">Requisitos Obligatorios de Viaje</h2>
+        <div class="requirements-grid">
+            <div class="card">
+                <h3>📜 Documentación y Visado</h3>
+                <ul>
+                    <li>Pasaporte vigente por al menos 6 meses.</li>
+                    <li>Verificar visado según el motivo de viaje (turismo/compras).</li>
+                    <li>Boleto de regreso o de salida hacia un tercer país.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>🩺 Requisitos Requeridos</h3>
+                <ul>
+                    <li>Certificado de Vacunación de <strong>Fiebre Amarilla</strong> (aplicada mínimo 10 días antes).</li>
+                    <li>Formulario de declaración de salud internacional.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>🎒 Equipaje e Información</h3>
+                <ul>
+                    <li>Incluye 1 equipaje de mano (hasta 10 kg).</li>
+                    <li>Opción de añadir equipaje de bodega (23 kg / 50 lbs).</li>
+                    <li>Envío inmediato de E-Ticket al correo electrónico.</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Agencia de Viajes Cuba-Guyana. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        document.getElementById('flightForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const origin = document.getElementById('origin').value;
+            const dest = document.getElementById('destination').value;
+            const date = document.getElementById('departureDate').value;
+            const pax = document.getElementById('passengers').value;
+
+            alert(`Solicitud recibida:\nVuelo de ${origin} a ${dest}\nFecha: ${date}\nPasajeros: ${pax}\n\nEn el siguiente paso conectaremos la pasarela de pagos.`);
+        });
+    </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vuelos  Cuba  a  Guyana | Reserva de Pasajes Directos</title>
+    <title>Vuelos Cuba a Guyana | Reserva de Pasajes Directos</title>
     <style>
         :root {
             --primary: #0052cc;
@@ -186,12 +186,10 @@
     </section>
 
     <main class="container">
-        <!-- Mensaje de éxito de pago -->
         <div id="successAlert" class="alert-box alert-success" style="display: none;">
             ¡Pago realizado con éxito! Hemos recibido tu reserva y te enviaremos el E-Ticket a tu correo electrónico.
         </div>
 
-        <!-- Buscador de Vuelos -->
         <div class="search-card">
             <form id="flightForm">
                 <div class="form-grid">
@@ -226,13 +224,11 @@
             </form>
         </div>
 
-        <!-- Información de Pagos -->
         <div class="payment-info">
             <h3>💳 Procesamiento de Pagos desde EE. UU.</h3>
             <p>Aceptamos Visa, MasterCard, Discover, American Express y Apple Pay mediante Stripe.</p>
         </div>
 
-        <!-- Requisitos para Viajar a Guyana -->
         <h2 class="section-title">Requisitos Obligatorios de Viaje</h2>
         <div class="requirements-grid">
             <div class="card">
@@ -285,7 +281,6 @@
             btn.disabled = true;
 
             try {
-                // Ruta para Netlify Functions
                 const response = await fetch('/.netlify/functions/create-checkout-session', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },

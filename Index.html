@@ -186,7 +186,7 @@
     </section>
 
     <main class="container">
-        <!-- Mensaje si el pago fue exitoso -->
+        <!-- Mensaje de éxito de pago -->
         <div id="successAlert" class="alert-box alert-success" style="display: none;">
             ¡Pago realizado con éxito! Hemos recibido tu reserva y te enviaremos el E-Ticket a tu correo electrónico.
         </div>
@@ -268,7 +268,6 @@
     </footer>
 
     <script>
-        // Mostrar alerta si regresa de un pago exitoso
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('success') === 'true') {
             document.getElementById('successAlert').style.display = 'block';
@@ -286,7 +285,8 @@
             btn.disabled = true;
 
             try {
-                const response = await fetch('/api/create-checkout-session', {
+                // Ruta para Netlify Functions
+                const response = await fetch('/.netlify/functions/create-checkout-session', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ origin, destination, departureDate, passengers })
@@ -295,7 +295,7 @@
                 const data = await response.json();
                 
                 if (data.url) {
-                    window.location.href = data.url; // Redirige a la pasarela de pagos de Stripe
+                    window.location.href = data.url; 
                 } else {
                     alert('Error: ' + (data.error || 'No se pudo iniciar el pago.'));
                     btn.textContent = 'Proceder al Pago Seguramente';

@@ -107,6 +107,16 @@
             background-color: #ff9900;
         }
 
+        .alert-box {
+            max-width: 850px;
+            margin: 0 auto 1.5rem auto;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .alert-success { background: #e3fcef; color: #006644; border: 1px solid #abf5d1; }
+
         .container {
             max-width: 1000px;
             margin: 0 auto;
@@ -161,11 +171,6 @@
             margin-top: 3rem;
             font-size: 0.9rem;
         }
-
-        @media (max-width: 600px) {
-            .hero h1 { font-size: 1.5rem; }
-            .search-card { margin-top: 10px; }
-        }
     </style>
 </head>
 <body>
@@ -181,6 +186,11 @@
     </section>
 
     <main class="container">
+        <!-- Mensaje si el pago fue exitoso -->
+        <div id="successAlert" class="alert-box alert-success" style="display: none;">
+            ¡Pago realizado con éxito! Hemos recibido tu reserva y te enviaremos el E-Ticket a tu correo electrónico.
+        </div>
+
         <!-- Buscador de Vuelos -->
         <div class="search-card">
             <form id="flightForm">
@@ -211,7 +221,7 @@
                         <input type="number" id="passengers" min="1" max="9" value="1" required>
                     </div>
 
-                    <button type="submit" class="btn-search">Buscar Disponibilidad</button>
+                    <button type="submit" class="btn-search">Proceder al Pago Seguramente</button>
                 </div>
             </form>
         </div>
@@ -219,7 +229,7 @@
         <!-- Información de Pagos -->
         <div class="payment-info">
             <h3>💳 Procesamiento de Pagos desde EE. UU.</h3>
-            <p>Aceptamos Visa, MasterCard, Discover, American Express, Zelle y Apple Pay.</p>
+            <p>Aceptamos Visa, MasterCard, Discover, American Express y Apple Pay mediante Stripe.</p>
         </div>
 
         <!-- Requisitos para Viajar a Guyana -->
@@ -258,14 +268,44 @@
     </footer>
 
     <script>
-        document.getElementById('flightForm').addEventListener('submit', function(e) {
+        // Mostrar alerta si regresa de un pago exitoso
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success') === 'true') {
+            document.getElementById('successAlert').style.display = 'block';
+        }
+
+        document.getElementById('flightForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const origin = document.getElementById('origin').value;
-            const dest = document.getElementById('destination').value;
-            const date = document.getElementById('departureDate').value;
-            const pax = document.getElementById('passengers').value;
+            const destination = document.getElementById('destination').value;
+            const departureDate = document.getElementById('departureDate').value;
+            const passengers = document.getElementById('passengers').value;
 
-            alert(`Solicitud recibida:\nVuelo de ${origin} a ${dest}\nFecha: ${date}\nPasajeros: ${pax}\n\nEn el siguiente paso conectaremos la pasarela de pagos.`);
+            const btn = document.querySelector('.btn-search');
+            btn.textContent = 'Conectando con pasarela segura...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('/api/create-checkout-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ origin, destination, departureDate, passengers })
+                });
+
+                const data = await response.json();
+                
+                if (data.url) {
+                    window.location.href = data.url; // Redirige a la pasarela de pagos de Stripe
+                } else {
+                    alert('Error: ' + (data.error || 'No se pudo iniciar el pago.'));
+                    btn.textContent = 'Proceder al Pago Seguramente';
+                    btn.disabled = false;
+                }
+            } catch (err) {
+                alert('Error de conexión con el servidor de pagos.');
+                btn.textContent = 'Proceder al Pago Seguramente';
+                btn.disabled = false;
+            }
         });
     </script>
 </body>
